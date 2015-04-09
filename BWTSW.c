@@ -86,7 +86,7 @@ int HitListPosTextDescOrder(const void *hitList, const int index1, const int ind
 	int Confirmation = FALSE;
 	int LoadIndex = FALSE;
 	int UnloadIndex = FALSE;
-    	
+
 	// Memory parameters
 	int PoolSize = 2097152;				// 2M  - fixed; not configurable through ini
 	int WorkingMemorySize = 67108864;	// 64M - good for 8M hit; configurable through ini
@@ -102,7 +102,7 @@ int HitListPosTextDescOrder(const void *hitList, const int index1, const int ind
 
 	// Database parameters
 	char DatabaseName[MAX_FILENAME_LEN+1] = "";
-	char DatabaseLocation[MAX_FILENAME_LEN+1] = "./";
+	char DatabaseLocation[MAX_FILENAME_LEN+1] = "";
 
 	// Query Parameter file
 	int AlternateQueryParameter = FALSE;
@@ -135,7 +135,7 @@ int HitListPosTextDescOrder(const void *hitList, const int index1, const int ind
 	int DustWindow = 64;
 	char *MaskOption;
 
-	// Extension Statistic parameters 
+	// Extension Statistic parameters
 	extern STAT_scoreBlock stat_scoreBlock;
 	extern double stat_expectationValue;
 	double InputEValue = (double)NON_INPUT_VALUE;
@@ -503,7 +503,7 @@ int main(int argc, char** argv) {
 		if (LoadIndex) {
 
 			databaseLoadTime = 0;
-			
+
 			// Accept connection
 			bwtServerSocket = SocketCreate(LOCAL_SOCKET, SERVER_SOCKET_NAME);
 			if (bwtServerSocket == NULL) {
@@ -740,7 +740,7 @@ int main(int argc, char** argv) {
 			numOfQueryPattern++;
 
 			// Initialize statistics
-			initializeHSPstatistic(hsp->dnaLength, hsp->numOfSeq, hsp->minSeqLength, dbCharProb, 
+			initializeHSPstatistic(hsp->dnaLength, hsp->numOfSeq, hsp->minSeqLength, dbCharProb,
 								   queryPatternLength, numOfContext, queryCharProb, scoringMatrix);
 
 			if (PrintProgress) {
@@ -777,10 +777,10 @@ int main(int argc, char** argv) {
 												 workingMemory + workingMemoryUsed, WorkingMemorySize, &numOfQueryPos,
 												stat_scoreBlock.match, stat_scoreBlock.mismatch,
 												-stat_scoreBlock.gapOpen, -stat_scoreBlock.gapExt,
-												(int)calcGapCutoffScore(), 
+												(int)calcGapCutoffScore(),
 												&bwtDPStatistics,
 												PrintProgressDepth);
-											
+
 				if (numOfSaIndexGroup > 0) {
 
 					// Reconstruct the result from DP on index
@@ -828,7 +828,7 @@ int main(int argc, char** argv) {
 
 					context[currentContext].numOfHit = BWTDPHit(bwt, saIndexGroup, numOfSaIndexGroup,
 																0, &i,
-																FALSE, workingMemory + workingMemoryUsed, WorkingMemorySize - workingMemoryUsed, 
+																FALSE, workingMemory + workingMemoryUsed, WorkingMemorySize - workingMemoryUsed,
 																&bwtSaRetrievalStatistics);
 					context[currentContext].numOfDPPoint = numOfDPPoint;
 
@@ -866,11 +866,11 @@ int main(int argc, char** argv) {
 
 					context[currentContext].gappedHitList = MMUnitAllocate(context[currentContext].numOfDPPoint * sizeof(GappedHitList));
 					memcpy((char*)context[currentContext].gappedHitList
-								  + context[currentContext].numOfDPPoint * sizeof(GappedHitList) 
-								  - context[currentContext].numOfHit * sizeof(HitList), 
+								  + context[currentContext].numOfDPPoint * sizeof(GappedHitList)
+								  - context[currentContext].numOfHit * sizeof(HitList),
 								  hitList, context[currentContext].numOfHit * sizeof(HitList));
-					hitList = (HitList*)((char*)context[currentContext].gappedHitList 
-															+ context[currentContext].numOfDPPoint * sizeof(GappedHitList) 
+					hitList = (HitList*)((char*)context[currentContext].gappedHitList
+															+ context[currentContext].numOfDPPoint * sizeof(GappedHitList)
 															- context[currentContext].numOfHit * sizeof(HitList));
 
 					numOfGappedHitWithTraceback = HSPDPDBvsQuery(hsp->packedDNA, hitList, context[currentContext].numOfHit,
@@ -986,13 +986,13 @@ int main(int argc, char** argv) {
 
 				// Output results
 				HSPPrintAlignment(workingMemoryPool, outputFile, finalHitListAllContext, numOfHitForQuery,
-								  OutputFormat, contextInfo, 
+								  OutputFormat, contextInfo,
 								  charMap, complementMap,
 								  queryPatternName, queryPattern, queryPatternLength,
 								  dbOrder, hsp->seqOffset, hsp->annotation);
 				if (alignFile != NULL) {
 					HSPPrintAlignment(workingMemoryPool, alignFile, finalHitListAllContext, numOfHitForQuery,
-									  OUTPUT_PAIRWISE, contextInfo, 
+									  OUTPUT_PAIRWISE, contextInfo,
 									  charMap, complementMap,
 									  queryPatternName, queryPattern, queryPatternLength,
 									  dbOrder, hsp->seqOffset, hsp->annotation);
@@ -1029,7 +1029,7 @@ int main(int argc, char** argv) {
 			totalNumOfChar += queryPatternLength;
 
 		}
-		
+
 		HSPPrintTrailer(outputFile, OutputFormat, DatabaseName, hsp->numOfSeq, hsp->dnaLength);
 		if (alignFile != NULL) {
 			HSPPrintTrailer(alignFile, OUTPUT_PAIRWISE, DatabaseName, hsp->numOfSeq, hsp->dnaLength);
@@ -1330,7 +1330,7 @@ void ValidateIni() {
 	if (AmbiguityFileName[0] == '\0') {
 		fprintf(stderr, "Ambiguity file is not specified!\n");
 		exit(1);
-	}	
+	}
 	if (PackedDNAFileName[0] == '\0') {
 		fprintf(stderr, "Packed DNA file is not specified!\n");
 		exit(1);
